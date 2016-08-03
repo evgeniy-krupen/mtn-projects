@@ -2,10 +2,13 @@
 <project name="MyProject" default="dist" basedir=".">
 
 <!-- set global properties for MyProject -->
+<!--
   <property name="src" location="src"/>
   <property name="build" location="build"/>
   <property name="dist"  location="dist"/>
   <property name="test"  location="test"/>
+-->
+<property file="config/project.properties"/>
 
 <!-- Target check -->
 <target name="check">
@@ -22,8 +25,11 @@
 <!-- Target init -->
 <target name="init" depends="clean" >
 	<!-- Create the time stamp -->
-	<tstamp/>
+ <tstamp>
+    <format property="TODAY_GB" pattern="d-MMMM-yyyy" locale="en,GB"/>
+  </tstamp>
 	<echo>I created the time stamp ${DSTAMP}-${TSTAMP}</echo>
+	<echo> ${TODAY_GB}</echo>
 	<!-- Create the directory -->
 	<mkdir dir="${build}"/>
 </target>
