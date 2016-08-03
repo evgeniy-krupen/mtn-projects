@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<project name="MyProject" default="dist" basedir=".">
+
+<!-- set global properties for MyProject -->
+  <property name="src" location="src"/>
+  <property name="build" location="build"/>
+  <property name="dist"  location="dist"/>
+  <property name="test"  location="test"/>
+
+<!-- Target check -->
+<target name="check">
+	<echo>Running MyProject</echo>
+</target>
+
+<!-- Targen clean -->
+<target name="clean" depends="check">
+    <delete dir="${build}"/>
+    <delete dir="${dist}"/>
+<echo> I cleaned all directories </echo>
+</target>
+
+<!-- Target init -->
+<target name="init" depends="clean" >
+	<!-- Create the time stamp -->
+	<tstamp/>
+	<echo>I created the time stamp ${DSTAMP}-${TSTAMP}</echo>
+	<!-- Create the directory -->
+	<mkdir dir="${build}"/>
+</target>
+
+<!-- Target compile -->
+<target name="compile" depends="init" >
+	<echo>I created path to lib</echo>
+	<path id="compile.path">
+	<fileset dir="lib">
+	<include name="commons-collections-3.2.1.jar" />
+	</fileset>
+	</path>
+	<echo>I compile .java to .class with lib</echo>
+	<javac srcdir="${src}" destdir="${build}" includeantruntime="false" classpathref="compile.path"/>
+</target>
+
+<!-- Target test -->
+<target name="test" depends="compile" description="compile the test">
+	<!-- Add lib -->
+	<path id="libs">
+	<fileset dir="lib" includes="*.jar"/>
+	</path>
+	<!-- Compile .class for test -->
+	<javac srcdir="${test}" destdir="${test}" classpathref="libs" includeantruntime="false" />
+	<!-- Test Junit -->
+		<junit printsummary="yes" haltonfailure="no">
+        	        <classpath path="${lib}"> 
+                	<path refid="libs" />
+	                </classpath>  
+        		        <batchtest fork="yes" >
+                		<fileset dir="${test}">
+				<include name="*.java"/>
+	                	</fileset>
+			        </batchtest>
+	        </junit>
+	<echo>Test was successfull</echo>
+</target>
+	
+<!-- Target jar -->
+	<target name="jar" depends="compile" >
+		<echo> I created the directory ${dist} </echo>
+		<mkdir dir="${dist}"/>
+		<echo> I created .jar from .class </echo>
+		<jar jarfile="${dist}/${DSTAMP}-${TSTAMP}-krupen.jar" basedir="${build}"/>
+	</target>
+
+<!-- Target dist -->
+	<target name="dist" depends="jar" >
+		<echo> I created directory and copy all files that I need </echo>
+		<mkdir dir="${DSTAMP}-${TSTAMP}-Krupen"/>
+		<copy file="${dist}/${DSTAMP}-${TSTAMP}-krupen.jar" todir="${DSTAMP}-${TSTAMP}-Krupen" />
+		<copy todir="${DSTAMP}-${TSTAMP}-Krupen"> <fileset dir="lib"/> </copy>
+		<copy file="config/project.properties" todir="${DSTAMP}-${TSTAMP}-Krupen" />
+		<tar destfile="${DSTAMP}-Krupen.tar" basedir="${DSTAMP}-${TSTAMP}-Krupen" />
+		<delete dir="${DSTAMP}-${TSTAMP}-Krupen" />
+	</target>
+</project>
