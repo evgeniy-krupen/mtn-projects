@@ -14,7 +14,6 @@
    <maven.build.timestamp.format>yyyy-MM-dd'-Time-'HH:mm-z</maven.build.timestamp.format>
 </properties>
 
-<!-- test -->
 
 <dependencies>
 <!-- https://mvnrepository.com/artifact/commons-collections/commons-collections -->
