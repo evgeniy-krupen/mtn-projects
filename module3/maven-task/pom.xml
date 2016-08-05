@@ -14,7 +14,7 @@
    <maven.build.timestamp.format>yyyy-MM-dd'-Time-'HH:mm-z</maven.build.timestamp.format>
 </properties>
 
-
+<!-- test -->
 
 <dependencies>
 <!-- https://mvnrepository.com/artifact/commons-collections/commons-collections -->
@@ -37,7 +37,9 @@
 	<outputDirectory>${project.build.directory}/classes</outputDirectory>
 	<finalName>${project.artifactId}-${project.version}</finalName>
     <plugins>
+
 	<!--- TIME STAMP JAR -->
+
         <plugin>
    	     <groupId>org.apache.maven.plugins</groupId>
 		 <artifactId>maven-jar-plugin</artifactId>
@@ -49,7 +51,8 @@
 		        </configuration>
         </plugin>
 
-	<!-- ASSEMBLY -->
+
+	<!-- ASSEMBLY --> 
 	<plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-assembly-plugin</artifactId>
